@@ -15,9 +15,26 @@ dependencies {
     implementation(libs.compose.uiToolingPreview)
 }
 
+kotlin {
+    jvmToolchain(21)
+}
+
 compose.desktop {
     application {
         mainClass = "io.github.kevinah95.delete_l06.MainKt"
+
+        val korGeJvmArgs = listOf(
+            "--add-opens=java.desktop/sun.java2d.opengl=ALL-UNNAMED",
+            "--add-opens=java.desktop/java.awt=ALL-UNNAMED",
+            "--add-opens=java.desktop/sun.awt=ALL-UNNAMED",
+            "--add-opens=java.desktop/sun.lwawt=ALL-UNNAMED",
+            "--add-opens=java.desktop/sun.lwawt.macosx=ALL-UNNAMED",
+            "--add-opens=java.desktop/com.apple.eawt=ALL-UNNAMED",
+            "--add-opens=java.desktop/com.apple.eawt.event=ALL-UNNAMED",
+            "--add-exports=java.desktop/com.apple.eawt=ALL-UNNAMED",
+            "--add-exports=java.desktop/com.apple.eawt.event=ALL-UNNAMED"
+        )
+        jvmArgs.addAll(korGeJvmArgs)
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
@@ -25,4 +42,18 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+
+tasks.withType<JavaExec>().configureEach {
+    jvmArgs(
+        "--add-opens=java.desktop/sun.java2d.opengl=ALL-UNNAMED",
+        "--add-opens=java.desktop/java.awt=ALL-UNNAMED",
+        "--add-opens=java.desktop/sun.awt=ALL-UNNAMED",
+        "--add-opens=java.desktop/sun.lwawt=ALL-UNNAMED",
+        "--add-opens=java.desktop/sun.lwawt.macosx=ALL-UNNAMED",
+        "--add-opens=java.desktop/com.apple.eawt=ALL-UNNAMED",
+        "--add-opens=java.desktop/com.apple.eawt.event=ALL-UNNAMED",
+        "--add-exports=java.desktop/com.apple.eawt=ALL-UNNAMED",
+        "--add-exports=java.desktop/com.apple.eawt.event=ALL-UNNAMED"
+    )
 }
